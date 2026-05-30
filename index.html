@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>FixNow — Urgencias del Hogar en Minutos</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*{font-family:'Inter',sans-serif}body{background:#0c0808;color:#f0f0f0}
+.glass{background:rgba(255,255,255,0.04);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.08)}
+.accent{color:#ef4444}.accent-bg{background:linear-gradient(135deg,#ef4444,#dc2626)}
+.btn-primary{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;font-weight:700;transition:all .2s;border-radius:12px;padding:14px 28px;border:none}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(239,68,68,.5)}
+.card{background:#110d0d;border:1px solid #2a1a1a;border-radius:20px}
+input,select,textarea{background:#110d0d;border:1px solid #2a1a1a;color:#f0f0f0;border-radius:10px;padding:12px 16px;width:100%;outline:none;transition:border .2s}
+input:focus,select:focus,textarea:focus{border-color:#ef4444}select option{background:#110d0d}
+.service-type{background:#110d0d;border:2px solid #2a1a1a;border-radius:16px;padding:20px;cursor:pointer;transition:all .3s;text-align:center}
+.service-type:hover,.service-type.sel{border-color:#ef4444;background:#1a0d0d;box-shadow:0 0 20px rgba(239,68,68,.15)}
+.urgency-btn{padding:10px 20px;border:1px solid #2a1a1a;border-radius:8px;cursor:pointer;font-weight:700;font-size:13px;transition:all .2s;background:#110d0d}
+.urgency-btn.sel{background:rgba(239,68,68,.2);border-color:#ef4444;color:#ef4444}
+.tech-card{background:#110d0d;border:1px solid #2a1a1a;border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;transition:all .3s;cursor:pointer}
+.tech-card:hover,.tech-card.sel{border-color:#ef4444;background:#1a0d0d}
+.live-dot{width:8px;height:8px;background:#ef4444;border-radius:50%;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.2)}}
+.eta-ring{width:80px;height:80px;border-radius:50%;border:3px solid #ef4444;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(239,68,68,.3)}
+</style>
+</head>
+<body>
+<nav class="fixed top-0 w-full z-50 glass border-b border-white/5">
+  <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 accent-bg rounded-lg flex items-center justify-center font-black text-white text-sm">FN</div>
+      <span class="font-bold text-lg">FixNow</span>
+    </div>
+    <div class="hidden md:flex gap-8 text-sm text-gray-400">
+      <a href="#urgencia" class="hover:text-white transition">Urgencia</a>
+      <a href="#seguimiento" class="hover:text-white transition">Mi técnico</a>
+      <a href="#servicios" class="hover:text-white transition">Servicios</a>
+    </div>
+    <a href="#urgencia" class="btn-primary text-sm py-2 px-5">🚨 Pedir urgencia</a>
+  </div>
+</nav>
+
+<section class="relative min-h-screen flex items-center overflow-hidden">
+  <div class="absolute inset-0"><img src="img/hero.webp" class="w-full h-full object-cover opacity-20"/><div class="absolute inset-0 bg-gradient-to-r from-[#0c0808] via-[#0c0808]/85 to-transparent"></div></div>
+  <div class="relative max-w-6xl mx-auto px-6 pt-24">
+    <div class="inline-flex items-center gap-3 glass rounded-full px-4 py-2 text-sm mb-6">
+      <div class="live-dot"></div>
+      <span class="text-gray-300">12 técnicos disponibles ahora · Tiempo medio de llegada: 28 min</span>
+    </div>
+    <h1 class="text-5xl md:text-7xl font-black leading-tight">¿Avería en casa?<br/><span class="accent">Técnico en 30 min.</span></h1>
+    <p class="text-gray-400 mt-6 text-xl max-w-xl">Fontanero, electricista, cerrajero o calefacción. Solicita una urgencia y sigue a tu técnico en tiempo real por el mapa.</p>
+    <div class="flex flex-wrap gap-4 mt-10">
+      <a href="#urgencia" class="btn-primary text-base text-center">🚨 Solicitar urgencia ahora</a>
+      <a href="#servicios" class="glass text-white font-semibold rounded-xl px-7 py-4 border border-white/10 hover:border-red-500/30 transition text-sm">Ver servicios y precios</a>
+    </div>
+    <div class="flex flex-wrap gap-4 mt-10">
+      <div class="glass rounded-xl px-5 py-3 text-sm">⏱️ <span class="font-bold accent">~28 min</span> <span class="text-gray-400">tiempo de llegada</span></div>
+      <div class="glass rounded-xl px-5 py-3 text-sm">💰 <span class="font-bold">Presupuesto gratis</span> <span class="text-gray-400">antes de empezar</span></div>
+      <div class="glass rounded-xl px-5 py-3 text-sm">🛡️ <span class="font-bold">Garantía 6 meses</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLICITUD URGENCIA -->
+<section id="urgencia" class="max-w-6xl mx-auto px-6 py-24">
+  <div class="grid md:grid-cols-2 gap-10">
+    <div class="card p-8">
+      <h2 class="text-2xl font-bold mb-2">Solicitar servicio</h2>
+      <p class="text-gray-500 text-sm mb-7">Rellena el formulario y un técnico te confirma en menos de 5 minutos.</p>
+
+      <div id="req-form" class="space-y-5">
+        <div>
+          <label class="text-xs text-gray-500 uppercase tracking-wider mb-3 block">Tipo de servicio</label>
+          <div class="grid grid-cols-3 gap-3">
+            <div class="service-type" onclick="selService(this,'🔧 Fontanero')"><div class="text-3xl mb-2">🔧</div><p class="text-xs font-bold">Fontanero</p></div>
+            <div class="service-type" onclick="selService(this,'⚡ Electricista')"><div class="text-3xl mb-2">⚡</div><p class="text-xs font-bold">Electricista</p></div>
+            <div class="service-type" onclick="selService(this,'🔑 Cerrajero')"><div class="text-3xl mb-2">🔑</div><p class="text-xs font-bold">Cerrajero</p></div>
+            <div class="service-type" onclick="selService(this,'🔥 Calefacción')"><div class="text-3xl mb-2">🔥</div><p class="text-xs font-bold">Calefacción</p></div>
+            <div class="service-type" onclick="selService(this,'❄️ Aire acond.')"><div class="text-3xl mb-2">❄️</div><p class="text-xs font-bold">Aire acond.</p></div>
+            <div class="service-type" onclick="selService(this,'🏗️ Albañilería')"><div class="text-3xl mb-2">🏗️</div><p class="text-xs font-bold">Albañilería</p></div>
+          </div>
+        </div>
+        <div>
+          <label class="text-xs text-gray-500 uppercase tracking-wider mb-3 block">Urgencia</label>
+          <div class="flex gap-2">
+            <button class="urgency-btn flex-1" onclick="selUrgency(this,'now')">🚨 Ahora mismo</button>
+            <button class="urgency-btn flex-1 sel" onclick="selUrgency(this,'today')">📅 Hoy</button>
+            <button class="urgency-btn flex-1" onclick="selUrgency(this,'tomorrow')">🗓️ Mañana</button>
+          </div>
+        </div>
+        <div>
+          <label class="text-xs text-gray-500 uppercase tracking-wider mb-2 block">Describe el problema</label>
+          <textarea id="req-desc" placeholder="Ej: Hay agua saliendo del bajo del fregadero, la avería empezó hace 1 hora..." rows="3"></textarea>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <input id="req-name" type="text" placeholder="Nombre"/>
+          <input id="req-phone" type="tel" placeholder="Teléfono"/>
+        </div>
+        <input id="req-addr" type="text" placeholder="📍 Dirección completa"/>
+        <button onclick="sendRequest()" class="btn-primary w-full text-base text-center">🚨 Confirmar solicitud</button>
+      </div>
+
+      <div id="req-sent" class="hidden text-center py-8">
+        <div class="text-5xl mb-4">✅</div>
+        <h3 class="text-xl font-bold">¡Solicitud enviada!</h3>
+        <p class="text-gray-400 mt-2 text-sm">Tu técnico te llamará en menos de 5 minutos.</p>
+        <div class="glass rounded-xl p-5 mt-5 space-y-2 text-sm text-left">
+          <div class="flex justify-between"><span class="text-gray-500">Servicio</span><span id="r-svc" class="font-bold"></span></div>
+          <div class="flex justify-between"><span class="text-gray-500">Código</span><span id="r-code" class="font-mono font-bold accent"></span></div>
+          <div class="flex justify-between"><span class="text-gray-500">ETA estimado</span><span class="font-bold text-green-400">~28 min</span></div>
+        </div>
+        <button onclick="showTracking()" class="btn-primary mt-5 text-sm px-8">Seguir a mi técnico en vivo</button>
+      </div>
+    </div>
+
+    <!-- Tracking simulado -->
+    <div id="seguimiento" class="card p-8">
+      <h2 class="text-2xl font-bold mb-2">Tu técnico en camino</h2>
+      <p class="text-gray-500 text-sm mb-6">Introduce tu código para ver la ubicación en tiempo real.</p>
+
+      <div id="tracking-search">
+        <div class="flex gap-3 mb-5">
+          <input id="track-code" type="text" placeholder="Código · Ej: FN-2291" class="font-mono uppercase" oninput="this.value=this.value.toUpperCase()"/>
+          <button onclick="loadTracking()" class="btn-primary py-3 px-5 text-sm whitespace-nowrap">Ver</button>
+        </div>
+        <p class="text-center text-gray-600 text-sm">Prueba con <span class="accent font-mono font-bold cursor-pointer" onclick="document.getElementById('track-code').value='FN-2291';loadTracking()">FN-2291</span></p>
+      </div>
+
+      <div id="tracking-view" class="hidden">
+        <!-- Mapa simulado -->
+        <div class="rounded-xl overflow-hidden mb-5 relative" style="height:200px;background:linear-gradient(135deg,#111,#1a1a2e)">
+          <div class="absolute inset-0 flex items-center justify-center text-center p-4">
+            <div>
+              <div class="text-4xl mb-2 animate-bounce">📍</div>
+              <p class="text-xs text-gray-400">Carlos M. · 🔧 Fontanero</p>
+              <p class="text-xs text-gray-500 mt-1">Calle Mayor 34 → Tu dirección</p>
+              <div class="flex justify-center gap-1 mt-3">
+                <div class="w-2 h-2 bg-red-500 rounded-full animate-ping"></div>
+                <div class="w-2 h-2 bg-red-500 rounded-full animate-ping" style="animation-delay:.2s"></div>
+                <div class="w-2 h-2 bg-red-500 rounded-full animate-ping" style="animation-delay:.4s"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-5 mb-5">
+          <div class="eta-ring flex-shrink-0">
+            <p class="text-xl font-black accent" id="eta-min">18</p>
+            <p class="text-xs text-gray-500">min</p>
+          </div>
+          <div>
+            <h3 class="font-bold">Carlos M.</h3>
+            <p class="text-gray-400 text-sm">🔧 Fontanero · 4.9⭐ (184 trabajos)</p>
+            <p class="text-green-400 text-xs mt-1 flex items-center gap-1"><span class="live-dot"></span>En camino ahora mismo</p>
+          </div>
+        </div>
+
+        <div class="space-y-2 text-sm">
+          <div class="glass rounded-xl p-3 flex items-center gap-3"><div class="w-6 h-6 bg-green-900 rounded-full flex items-center justify-center text-xs">✓</div><span>Solicitud confirmada · hace 3 min</span></div>
+          <div class="glass rounded-xl p-3 flex items-center gap-3"><div class="w-6 h-6 accent-bg rounded-full flex items-center justify-center text-xs">🚗</div><span class="text-red-400">Carlos está en camino · ~18 min</span></div>
+          <div class="glass rounded-xl p-3 flex items-center gap-3 opacity-40"><div class="w-6 h-6 bg-gray-800 rounded-full flex items-center justify-center text-xs">3</div><span class="text-gray-500">Llegada y presupuesto in situ</span></div>
+        </div>
+
+        <button onclick="alert('Llamando a Carlos M... +34 6XX XXX XXX')" class="btn-primary w-full mt-5 text-sm text-center">📞 Llamar a mi técnico</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS Y PRECIOS -->
+<section id="servicios" class="max-w-6xl mx-auto px-6 py-16">
+  <h2 class="text-3xl font-bold mb-2">Servicios y <span class="accent">precios</span></h2>
+  <p class="text-gray-400 mb-8 text-sm">Sin letra pequeña. Presupuesto gratuito antes de empezar cualquier trabajo.</p>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+    <div class="card p-6"><div class="text-4xl mb-3">🔧</div><h3 class="font-bold text-lg">Fontanería</h3><p class="text-gray-500 text-sm mt-1 mb-4">Fugas, atascos, grifería, tuberías, baños y cocinas.</p><p class="text-sm text-gray-400">Desde <span class="accent font-bold text-base">45€</span> + materiales</p></div>
+    <div class="card p-6"><div class="text-4xl mb-3">⚡</div><h3 class="font-bold text-lg">Electricidad</h3><p class="text-gray-500 text-sm mt-1 mb-4">Cuadros, enchufes, cortocircuitos, iluminación LED.</p><p class="text-sm text-gray-400">Desde <span class="accent font-bold text-base">40€</span> + materiales</p></div>
+    <div class="card p-6"><div class="text-4xl mb-3">🔑</div><h3 class="font-bold text-lg">Cerrajería</h3><p class="text-gray-500 text-sm mt-1 mb-4">Apertura sin rotura, cambio de cerradura, bombines.</p><p class="text-sm text-gray-400">Desde <span class="accent font-bold text-base">60€</span> · Sin daños</p></div>
+    <div class="card p-6"><div class="text-4xl mb-3">🔥</div><h3 class="font-bold text-lg">Calefacción</h3><p class="text-gray-500 text-sm mt-1 mb-4">Calderas, radiadores, suelo radiante, ACS.</p><p class="text-sm text-gray-400">Desde <span class="accent font-bold text-base">55€</span> + materiales</p></div>
+    <div class="card p-6"><div class="text-4xl mb-3">❄️</div><h3 class="font-bold text-lg">Aire acondicionado</h3><p class="text-gray-500 text-sm mt-1 mb-4">Instalación, mantenimiento, limpieza de filtros.</p><p class="text-sm text-gray-400">Desde <span class="accent font-bold text-base">50€</span></p></div>
+    <div class="card p-6"><div class="text-4xl mb-3">🏗️</div><h3 class="font-bold text-lg">Albañilería</h3><p class="text-gray-500 text-sm mt-1 mb-4">Goteras, humedades, grietas, alicatados, pintura.</p><p class="text-sm text-gray-400">Desde <span class="accent font-bold text-base">60€</span> + materiales</p></div>
+  </div>
+</section>
+
+<footer class="border-t border-white/5 py-8 text-center text-gray-600 text-sm">
+  <p class="font-bold text-white mb-1">FixNow — Servicios del Hogar</p>
+  <p>Madrid y área metropolitana · 24h/365 días · Urgencias disponibles siempre</p>
+  <p class="mt-2">Desarrollado por <span class="accent font-semibold">PuntoZero Solutions</span></p>
+</footer>
+<script>
+let selSvc='', selUrg='today';
+function selService(el,name){document.querySelectorAll('.service-type').forEach(e=>e.classList.remove('sel'));el.classList.add('sel');selSvc=name;}
+function selUrgency(el,type){document.querySelectorAll('.urgency-btn').forEach(e=>e.classList.remove('sel'));el.classList.add('sel');selUrg=type;}
+function sendRequest(){
+  const name=document.getElementById('req-name').value;
+  if(!name){alert('Introduce tu nombre');return;}
+  document.getElementById('req-form').classList.add('hidden');
+  document.getElementById('req-sent').classList.remove('hidden');
+  document.getElementById('r-svc').textContent=selSvc||'Servicio general';
+  document.getElementById('r-code').textContent='FN-'+Math.floor(1000+Math.random()*9000);
+}
+function showTracking(){document.getElementById('tracking-search').classList.add('hidden');document.getElementById('tracking-view').classList.remove('hidden');document.getElementById('seguimiento').scrollIntoView({behavior:'smooth'});}
+function loadTracking(){document.getElementById('tracking-search').classList.add('hidden');document.getElementById('tracking-view').classList.remove('hidden');}
+// Countdown ETA
+let eta=18;
+setInterval(()=>{if(eta>2){eta--;document.getElementById('eta-min').textContent=eta;}},8000);
+</script>
+</body></html>
